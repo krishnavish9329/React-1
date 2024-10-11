@@ -1,63 +1,37 @@
-import React from 'react'
-import { Card } from './components/Card'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
 const App = () => {
-  const user = [
-    {
-      "Name": "John Doe",
-      "Age": 28,
-      "City": "New York",
-      "Profession": "Software Engineer",
-      "ImageURL": "https://example.com/images/john_doe.jpg"
-    },
-    {
-      "Name": "Jane Smith",
-      "Age": 34,
-      "City": "San Francisco",
-      "Profession": "Data Scientist",
-      "ImageURL": "https://example.com/images/jane_smith.jpg"
-    },
-    {
-      "Name": "Michael Johnson",
-      "Age": 45,
-      "City": "Los Angeles",
-      "Profession": "Graphic Designer",
-      "ImageURL": "https://example.com/images/michael_johnson.jpg"
-    },
-    {
-      "Name": "Emily Davis",
-      "Age": 30,
-      "City": "Chicago",
-      "Profession": "Marketing Manager",
-      "ImageURL": "https://example.com/images/emily_davis.jpg"
-    },
-    {
-      "Name": "David Wilson",
-      "Age": 40,
-      "City": "Houston",
-      "Profession": "Product Manager",
-      "ImageURL": "https://example.com/images/david_wilson.jpg"
-    }
-  ]
 
-  user.forEach(()=>{
-    console.log("jj")
-  })
-  
+  const [data, setdata] = useState([])
 
+  const GetData= async()=>{
+    const response = await axios.get('https://picsum.photos/v2/list')
+    
+    setdata(response.data)
+    
+    console.log(data)
 
+  }
+  // GetData() // this function is working but not efficiant way
+
+  useEffect(() => {
+    GetData()
+  }, [])
   
   return (
-    <div>
-      <div className='p-10'>
-      {/* <Card user="sangam" age='69' city="Bhopal" /> */}
-      {
-        user.map(function(elem,index){
-          return <Card Key={index} Name={elem.Name} Age={elem.Age} url={elem.ImageURL} City={elem.City} />
-        })
-      }
-
-
+    <div className='p-10'>
+      {/* <button onClick={GetData} className='bg-teal-700 text-white font-semibold text-2xl px-6 py-3 rounded active:scale-90'>get Data</button> // * if we want to call GetData function with button */ }
+      <div className='p-5 mt-5 bg-gray-950'>
+        {
+          data.map(function(elem,idx){
+            return (
+            <div key={idx} className='bg-gray-50 text-black flex itrm-center justify-between w-full px-7 py-6 rounded mb-3'>
+              <img className='h-40' src={elem.download_url} alt="" />
+              <h1>{elem.author}</h1>
+            </div>)
+          })
+        }
       </div>
     </div>
   )
