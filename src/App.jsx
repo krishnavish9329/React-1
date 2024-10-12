@@ -1,38 +1,19 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
+import Header1 from './components/Header1'
+import Footer1 from './components/Footer1'
+import { DataContext } from './contaxt/UserContext'
 
 const App = () => {
 
-  const [data, setdata] = useState([])
+  // contact API is state managment tolls (redux tolls)
+  // we can send ower data throught props but can can shard data as centralize data
 
-  const GetData= async()=>{
-    const response = await axios.get('https://picsum.photos/v2/list')
-    
-    setdata(response.data)
-    
-    console.log(data)
-
-  }
-  // GetData() // this function is working but not efficiant way
-
-  useEffect(() => {
-    GetData()
-  }, [])
-  
+  const data =useContext(DataContext)
   return (
-    <div className='p-10'>
-      {/* <button onClick={GetData} className='bg-teal-700 text-white font-semibold text-2xl px-6 py-3 rounded active:scale-90'>get Data</button> // * if we want to call GetData function with button */ }
-      <div className='p-5 mt-5 bg-gray-950'>
-        {
-          data.map(function(elem,idx){
-            return (
-            <div key={idx} className='bg-gray-50 text-black flex itrm-center justify-between w-full px-7 py-6 rounded mb-3'>
-              <img className='h-40' src={elem.download_url} alt="" />
-              <h1>{elem.author}</h1>
-            </div>)
-          })
-        }
-      </div>
+    <div>
+      <h1>this is App.js {data.username}</h1>
+      <Header1 />
+      <Footer1 />
     </div>
   )
 }
