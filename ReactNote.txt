@@ -536,5 +536,100 @@ export default App
 
 ----------------------------------------------------------------
 
+// 
 
 
+{ UserContext.jsx }
+
+import React, { createContext } from 'react'
+
+export const DataContext = createContext()
+
+const UserContext = (props) => {
+
+    console.log(props.children)
+
+    const userdata ={
+        username:"krishna",
+        age:21,
+        city:"jbp"
+    }
+  return (
+    <div>
+        <DataContext.Provider value={userdata}>
+
+            {props.children}
+
+        </DataContext.Provider>
+    </div>
+  )
+}
+
+export default UserContext
+
+{Header1.jsx}
+
+import React, { useContext } from 'react'
+import { DataContext } from '../contaxt/UserContext'
+
+const Header1 = () => {
+
+    const usercontext = useContext(DataContext)
+
+  return (
+    <div>
+        <h1>Header {usercontext.age}</h1>
+    </div>
+  )
+}
+
+export default Header1
+
+
+{Footer1.jsx}
+import React , { useContext }from 'react'
+import { DataContext } from '../contaxt/UserContext'
+
+const Footer1 = () => {
+    const data =useContext(DataContext)
+  return (
+    <div>
+        <h1>Footer {data.city}</h1>
+    </div>
+  )
+}
+
+export default Footer1
+
+{App.jsx}
+
+
+import React, { useContext } from 'react'
+import Header1 from './components/Header1'
+import Footer1 from './components/Footer1'
+import { DataContext } from './contaxt/UserContext'
+
+const App = () => {
+
+  // contact API is state managment tolls (redux tolls)
+  // we can send ower data throught props but can can shard data as centralize data
+
+  const data =useContext(DataContext)
+  return (
+    <div>
+      <h1>this is App.js {data.username}</h1>
+      <Header1 />
+      <Footer1 />
+    </div>
+  )
+}
+
+export default App
+
+output:--
+this is App.js krishna
+Header 21
+Footer jbp
+
+___________________________________________________________________________
+End this chepter of react
